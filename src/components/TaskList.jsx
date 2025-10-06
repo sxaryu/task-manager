@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { TASKS } from './TaskListData'
 import TaskForm from './Forms/TaskForm'
 import TaskItem from './TaskItem'
 
 export default function TaskList() {
-	const [tasks, setTasks] = useState(TASKS)
+	const [tasks, setTasks] = useState([])
 
 	const addTask = newTask => {
 		setTasks(prev => [...prev, newTask])

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { configs, InitialState } from './config'
+import { configs, InitialState } from '../Data/config'
 
 export default function TaskForm({ addTask }) {
 	const [formState, setFormState] = useState(InitialState)
