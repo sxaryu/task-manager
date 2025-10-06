@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { configs, InitialState } from '../Data/config'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function TaskForm({ addTask }) {
 	const [formState, setFormState] = useState(InitialState)
@@ -15,7 +16,7 @@ export default function TaskForm({ addTask }) {
 	const onSubmit = e => {
 		e.preventDefault()
 		addTask({
-			id: Date.now(),
+			id: uuidv4(),
 			title: formState.title,
 			description: formState.description,
 			dueDate: formState.dueDate
