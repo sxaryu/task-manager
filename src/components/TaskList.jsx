@@ -9,9 +9,18 @@ export default function TaskList() {
 		setTasks(prev => [...prev, newTask])
 	}
 
-	const deleteTask = taskIdToDelete => {
-		setTasks(prevTasks => prevTasks.filter(task => task.id !== taskIdToDelete))
+	const deleteTask = idToDelete => {
+		setTasks(prev => prev.filter(task => task.id !== idToDelete))
 	}
+
+	const editTask = (taskId, updatedData) => {
+		setTasks(prevTasks =>
+			prevTasks.map(task =>
+				task.id === taskId ? { ...task, ...updatedData } : task
+			)
+		)
+	}
+
 	return (
 		<div>
 			<TaskForm addTask={addTask} />
@@ -23,6 +32,7 @@ export default function TaskList() {
 					description={task.description}
 					dueDate={task.dueDate}
 					deleteTask={deleteTask}
+					editTask={editTask}
 				/>
 			))}
 		</div>

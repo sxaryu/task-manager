@@ -19,7 +19,8 @@ export default function TaskForm({ addTask }) {
 			id: uuidv4(),
 			title: formState.title,
 			description: formState.description,
-			dueDate: formState.dueDate
+			dueDate: formState.dueDate,
+			isFinished: false
 		})
 		setFormState(InitialState)
 	}

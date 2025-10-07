@@ -6,11 +6,19 @@ function App() {
 	const [tasks, setTasks] = useLocalStorage('tasks', [])
 
 	const addTask = newTask => {
-		setTasks(prev => [...prev, newTask])
+		setTasks(prev => [...prev, { ...newTask, isFinished: false }])
 	}
 
 	const deleteTask = idToDelete => {
 		setTasks(prev => prev.filter(task => task.id !== idToDelete))
+	}
+
+	const editTask = (taskId, updatedData) => {
+		setTasks(prevTasks =>
+			prevTasks.map(task =>
+				task.id === taskId ? { ...task, ...updatedData } : task
+			)
+		)
 	}
 
 	return (
@@ -28,6 +36,8 @@ function App() {
 						description={task.description}
 						dueDate={task.dueDate}
 						deleteTask={deleteTask}
+						editTask={editTask}
+						isFinished={task.isFinished}
 					/>
 				))}
 			</main>

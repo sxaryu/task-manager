@@ -1,7 +1,3 @@
-export default function FinishedButton({ isFinished, setFinished }) {
-	return (
-		<button onClick={() => setFinished(!isFinished)}>
-			{isFinished ? '✔' : '❌'}
-		</button>
-	)
+export default function FinishedButton({ isFinished, onToggle }) {
+	return <button onClick={onToggle}>{isFinished ? '✔' : '❌'}</button>
 }
