@@ -1,15 +1,14 @@
+import useLocalStorage from './hooks/useLocalStorage'
 import TaskForm from './components/Forms/TaskForm'
 import TaskItem from './components/TaskItem'
-import { useState } from 'react'
 
 function App() {
-	const [tasks, setTasks] = useState([])
+	const [tasks, setTasks] = useLocalStorage('tasks', [])
 
 	const addTask = newTask => {
 		setTasks(prev => [...prev, newTask])
 	}
 
-	// правильное удаление по id
 	const deleteTask = idToDelete => {
 		setTasks(prev => prev.filter(task => task.id !== idToDelete))
 	}
