@@ -1,23 +1,18 @@
 export const configs = [
 	{
-		name: 'title',
-		placeholder: 'Название задачи',
-		required: true
-	},
-	{
 		name: 'description',
-		placeholder: 'Описание задачи',
+		placeholder: 'Задача',
 		required: false
 	},
 	{
 		name: 'dueDate',
 		placeholder: 'Срок выполнения',
-		required: false
+		required: true,
+		type: 'date'
 	}
 ]
 
 export const InitialState = {
-	title: '',
 	description: '',
 	dueDate: ''
 }

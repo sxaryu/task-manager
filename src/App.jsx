@@ -32,7 +32,6 @@ function App() {
 					<TaskItem
 						key={task.id}
 						id={task.id}
-						title={task.title}
 						description={task.description}
 						dueDate={task.dueDate}
 						deleteTask={deleteTask}

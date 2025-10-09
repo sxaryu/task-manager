@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import FinishedButton from './utils/FinishedButton'
-//import useLocalStorage from '../hooks/useLocalStorage'
+import { format, isBefore, parseISO } from 'date-fns'
+import { ru } from 'date-fns/locale'
 
 export default function TaskItem({
 	id,
-	title,
 	description,
 	dueDate,
 	isFinished,
@@ -12,7 +12,7 @@ export default function TaskItem({
 	editTask
 }) {
 	const [isEditing, setIsEditing] = useState(false)
-	const [editedTask, setEditedTask] = useState({ title, description, dueDate })
+	const [editedTask, setEditedTask] = useState({ description, dueDate })
 
 	const toggleFinished = () => {
 		editTask(id, { isFinished: !isFinished })
@@ -27,10 +27,16 @@ export default function TaskItem({
 		setIsEditing(false)
 	}
 
+	const isOverdue = () => {
+		const deadline = parseISO(dueDate)
+		const now = new Date()
+		return isBefore(deadline, now)
+	}
+
 	if (isEditing) {
 		return (
 			<div className='border p-4 mb-4 rounded'>
-				{['title', 'description', 'dueDate'].map(field => (
+				{['description', 'dueDate'].map(field => (
 					<input
 						key={field}
 						name={field}
@@ -38,11 +44,7 @@ export default function TaskItem({
 						onChange={handleChange}
 						className='border p-2 w-full mb-2'
 						placeholder={
-							field === 'title'
-								? 'Название задачи'
-								: field === 'description'
-								? 'Описание задачи'
-								: 'Срок выполнения'
+							field === 'description' ? 'Описание задачи' : 'Срок выполнения'
 						}
 					/>
 				))}
@@ -67,9 +69,14 @@ export default function TaskItem({
 
 	return (
 		<div className='border p-4 mb-4 rounded'>
-			<h3>{title}</h3>
 			<p>{description}</p>
-			<p>{dueDate}</p>
+			<div className={`border p-4 mb-4 rounded ${isOverdue() ? '' : ''}`}>
+				<p>
+					{dueDate
+						? format(parseISO(dueDate), 'd MMMM yyyy в HH:mm', { locale: ru })
+						: 'Без срока'}
+				</p>
+			</div>
 
 			<FinishedButton
 				isFinished={isFinished}

@@ -17,7 +17,6 @@ export default function TaskForm({ addTask }) {
 		e.preventDefault()
 		addTask({
 			id: uuidv4(),
-			title: formState.title,
 			description: formState.description,
 			dueDate: formState.dueDate,
 			isFinished: false
