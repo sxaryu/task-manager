@@ -2,6 +2,7 @@ import { useState } from 'react'
 import FinishedButton from './utils/FinishedButton'
 import { format, isBefore, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
+import config from './Data/config'
 
 export default function TaskItem({
 	id,
@@ -36,19 +37,18 @@ export default function TaskItem({
 	if (isEditing) {
 		return (
 			<div className='border p-4 mb-4 rounded'>
-				{['description', 'dueDate'].map(field => (
+				{config.map(fieldConfig => (
 					<input
-						key={field}
-						name={field}
-						value={editedTask[field]}
+						key={fieldConfig.name}
+						name={fieldConfig.name}
+						type={fieldConfig.type || 'text'} // ← возьмет type="date" для dueDate
+						value={editedTask[fieldConfig.name]}
 						onChange={handleChange}
 						className='border p-2 w-full mb-2'
-						placeholder={
-							field === 'description' ? 'Описание задачи' : 'Срок выполнения'
-						}
+						placeholder={fieldConfig.placeholder}
+						required={fieldConfig.required}
 					/>
 				))}
-
 				<div className='flex gap-2'>
 					<button
 						onClick={handleSave}
