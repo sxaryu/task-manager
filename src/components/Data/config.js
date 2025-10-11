@@ -16,5 +16,3 @@ export const InitialState = {
 	description: '',
 	dueDate: ''
 }
-
-export default configs

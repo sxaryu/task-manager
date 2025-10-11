@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import FinishedButton from './utils/FinishedButton'
 import { format, isBefore, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
-import config from './Data/config'
+import { configs } from './Data/config'
+import FinishedButton from './utils/FinishedButton'
 
 export default function TaskItem({
 	id,
@@ -37,12 +37,12 @@ export default function TaskItem({
 	if (isEditing) {
 		return (
 			<div className='border p-4 mb-4 rounded'>
-				{config.map(fieldConfig => (
+				{configs.map(fieldConfig => (
 					<input
 						key={fieldConfig.name}
 						name={fieldConfig.name}
-						type={fieldConfig.type || 'text'} // ← возьмет type="date" для dueDate
 						value={editedTask[fieldConfig.name]}
+						type={fieldConfig.type || 'text'}
 						onChange={handleChange}
 						className='border p-2 w-full mb-2'
 						placeholder={fieldConfig.placeholder}
@@ -73,7 +73,7 @@ export default function TaskItem({
 			<div className={`border p-4 mb-4 rounded ${isOverdue() ? '' : ''}`}>
 				<p>
 					{dueDate
-						? format(parseISO(dueDate), 'd MMMM yyyy в HH:mm', { locale: ru })
+						? format(parseISO(dueDate), 'd MMMM yyyy', { locale: ru })
 						: 'Без срока'}
 				</p>
 			</div>
