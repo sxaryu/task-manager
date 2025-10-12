@@ -1,46 +1,50 @@
-import useLocalStorage from './hooks/useLocalStorage'
-import TaskForm from './components/Forms/TaskForm'
-import TaskItem from './components/TaskItem'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { useAuth } from './hooks/AuthContext'
+import AuthPage from './pages/AuthPage'
+import TasksPage from './pages/TaskPage'
+import TaskPage from './pages/TaskPage'
 
 function App() {
-	const [tasks, setTasks] = useLocalStorage('tasks', [])
-
-	const addTask = newTask => {
-		setTasks(prev => [...prev, { ...newTask, isFinished: false }])
-	}
-
-	const deleteTask = idToDelete => {
-		setTasks(prev => prev.filter(task => task.id !== idToDelete))
-	}
-
-	const editTask = (taskId, updatedData) => {
-		setTasks(prevTasks =>
-			prevTasks.map(task =>
-				task.id === taskId ? { ...task, ...updatedData } : task
-			)
-		)
-	}
+	const { currentUser } = useAuth()
 
 	return (
-		<>
-			<header>
-				<h1>Task Manager</h1>
-			</header>
-			<main>
-				<TaskForm addTask={addTask} />
-				{tasks.map(task => (
-					<TaskItem
-						key={task.id}
-						id={task.id}
-						description={task.description}
-						dueDate={task.dueDate}
-						deleteTask={deleteTask}
-						editTask={editTask}
-						isFinished={task.isFinished}
+		<Routes>
+			<Route
+				path='/auth'
+				element={
+					!currentUser ? (
+						<AuthPage />
+					) : (
+						<Navigate
+							to='/tasks'
+							replace
+						/>
+					)
+				}
+			/>
+			<Route
+				path='/tasks'
+				element={
+					currentUser ? (
+						<TaskPage />
+					) : (
+						<Navigate
+							to='/auth'
+							replace
+						/>
+					)
+				}
+			/>
+			<Route
+				path='/'
+				element={
+					<Navigate
+						to={currentUser ? '/tasks' : '/auth'}
+						replace
 					/>
-				))}
-			</main>
-		</>
+				}
+			/>
+		</Routes>
 	)
 }
 

@@ -44,7 +44,6 @@ export default function TaskItem({
 						value={editedTask[fieldConfig.name]}
 						type={fieldConfig.type || 'text'}
 						onChange={handleChange}
-						className='border p-2 w-full mb-2'
 						placeholder={fieldConfig.placeholder}
 						required={fieldConfig.required}
 					/>
