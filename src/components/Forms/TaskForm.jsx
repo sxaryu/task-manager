@@ -37,18 +37,21 @@ export default function TaskForm({ addTask }) {
 	}
 
 	return (
-		<div>
-			<form onSubmit={onSubmit}>
-				<p>Добавить задачу</p>
-
+		<div className='class="flex flex-col gap-2 mb-4 p-4 border border-gray-700 rounded "'>
+			<h3 className='text-lg font-semibold mb-3'>Добавить задачу</h3>
+			<form
+				className='flex flex-col gap-3'
+				onSubmit={onSubmit}
+			>
 				{configs
-					.filter(category => category.name !== 'category')
+					.filter(cate => cate.name !== 'category')
 					.map(item => (
 						<input
 							key={item.name}
 							{...item}
 							value={formState[item.name]}
 							onChange={handleChange}
+							className='px-3 py-2 rounded bg-[#1f2121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4dbcda]'
 						/>
 					))}
 
@@ -57,6 +60,7 @@ export default function TaskForm({ addTask }) {
 					value={formState.assignedTo}
 					onChange={handleChange}
 					required
+					className='px-3 py-2 rounded bg-[#1f2121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4dbcda]'
 				>
 					<option
 						value=''
@@ -69,7 +73,7 @@ export default function TaskForm({ addTask }) {
 							key={employee.id}
 							value={employee.id}
 						>
-							{employee.name}
+							{employee.name} {employee.surname}
 						</option>
 					))}
 				</select>
@@ -79,6 +83,7 @@ export default function TaskForm({ addTask }) {
 					value={formState.category}
 					onChange={handleChange}
 					required
+					className='px-3 py-2 rounded bg-[#1f2121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4dbcda]'
 				>
 					<option
 						value=''
@@ -96,7 +101,12 @@ export default function TaskForm({ addTask }) {
 					))}
 				</select>
 
-				<button type='submit'>+</button>
+				<button
+					type='submit'
+					className='px-4 py-2 bg-green-600 rounded hover:bg-green-700 transition-colors text-white font-semibold'
+				>
+					Добавить
+				</button>
 			</form>
 		</div>
 	)

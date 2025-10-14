@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/AuthContext'
 import { format, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
@@ -61,10 +61,14 @@ export default function PrintReport({
         <body>
           <h1>Отчёт о задачах сотрудника</h1>
           <h2>${employeeName}</h2>
-          <p><strong>Период:</strong> ${startDate || '—'} — ${
-			endDate || '—'
-		}</p>
-          <p><strong>Дата формирования:</strong> ${new Date().toLocaleDateString()}</p>
+          <p><strong>Период:</strong> ${
+						startDate ? formatDate(startDate) : '—'
+					} — ${endDate ? formatDate(endDate) : '—'}</p>
+          <p><strong>Дата формирования:</strong> ${format(
+						new Date(),
+						'd MMMM yyyy г.',
+						{ locale: ru }
+					)}</p>
 
           <table>
             <tr>
@@ -85,17 +89,17 @@ export default function PrintReport({
         <tr>
           <td>${i + 1}</td>
           <td>${t.description || '-'}</td>
-          <td>${t.dueDate || '-'}</td>
+          <td>${t.dueDate ? formatDate(t.dueDate) : '-'}</td>
           <td class="${t.isFinished ? 'done' : 'pending'}">
             ${t.isFinished ? 'Выполнена' : 'Не выполнена'}
           </td>
-          <td>${formatDate(t.createdAt) || '-'}</td>
+          <td>${t.createdAt ? formatDate(t.createdAt) : '-'}</td>
           <td>${authorName}</td>
         </tr>
       `
 							})
 							.join('')}
-</table>
+          </table>
 
           <p><strong>Всего задач:</strong> ${filteredTasks.length}</p>
           <script>window.print();</script>
@@ -124,12 +128,7 @@ export default function PrintReport({
 						onChange={e => setEmployeeId(e.target.value)}
 						style={{ width: '100%', padding: 8, marginBottom: 10 }}
 					>
-						<option
-							value=''
-							disabled
-						>
-							Выберите сотрудника
-						</option>
+						<option value=''>Выберите сотрудника</option>
 						{users
 							.filter(u => u.role === 'employee')
 							.map(u => (

@@ -7,7 +7,7 @@ export function openPrintableWindow(employee, tasks) {
 	reportWindow.document.write(`
     <html>
       <head>
-        <title>Отчёт по задачам — ${employee.name}</title>
+        <title>Отчёт по задачам — ${employee.username}</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -37,12 +37,12 @@ export function openPrintableWindow(employee, tasks) {
           }
           .pending {
             color: red;
-            font-weight: bold;  
+            font-weight: bold;
           }
         </style>
       </head>
       <body>
-        <h2>Отчёт о задачах сотрудника ${employee.name}</h2>
+        <h2>Отчёт о задачах сотрудника ${employee.username}</h2>
         <p><strong>Дата формирования:</strong> ${new Date().toLocaleDateString()}</p>
 
         <h3>Выполненные задачи (${completed.length})</h3>
