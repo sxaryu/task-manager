@@ -1,42 +1,118 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Общие стили для всего приложения */
+:root {
+	--bg-dark: #1f2121;
+	--card-bg: #4dbcda;
+	--text-light: #f5f5f5;
+	--text-muted: #b0b0b0;
+	--accent: #646cff;
+	--error: #ff4d4f;
 }
 
+body {
+	min-width: screen;
+	min-height: screen;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#root {
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+/* Логотип */
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+	height: 6em;
+	padding: 1.5em;
+	will-change: filter;
+	transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+	filter: drop-shadow(0 0 2em var(--accent));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+	filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
 }
 
+/* Карточки задач и элементов */
 .card {
-  padding: 2em;
+	background-color: var(--card-bg);
+	padding: 2em;
+	border-radius: 1rem;
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+	transition: box-shadow 0.3s, transform 0.3s;
 }
 
-.read-the-docs {
-  color: #888;
+.card:hover {
+	box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
+	transform: translateY(-2px);
+}
+
+/* Ссылки */
+a {
+	color: var(--accent);
+	text-decoration: none;
+	transition: color 0.2s;
+}
+a:hover {
+	color: #ffffff;
+}
+
+/* Кнопки */
+button {
+	background-color: var(--accent);
+	color: var(--text-light);
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: background-color 0.2s, transform 0.2s;
+}
+button:hover {
+	background-color: #4a56f1;
+	transform: translateY(-1px);
+}
+
+/* Инпуты и селекты */
+input,
+select,
+textarea {
+	background-color: var(--bg-dark);
+	color: var(--text-light);
+	border: 1px solid #444;
+	border-radius: 0.5rem;
+	padding: 0.5rem 0.75rem;
+	outline: none;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 0.5rem var(--accent);
+}
+
+/* Текстовые стили */
+.text-muted {
+	color: var(--text-muted);
+}
+.text-error {
+	color: var(--error);
 }

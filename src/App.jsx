@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './hooks/AuthContext'
 import AuthPage from './pages/AuthPage'
-import TasksPage from './pages/TaskPage'
 import TaskPage from './pages/TaskPage'
 
 function App() {
