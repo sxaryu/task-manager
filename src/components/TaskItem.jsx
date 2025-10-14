@@ -13,7 +13,9 @@ export default function TaskItem({
 	deleteTask,
 	editTask,
 	categories,
-	role
+	role,
+	users,
+	createdBy
 }) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [editedTask, setEditedTask] = useState({
@@ -35,6 +37,9 @@ export default function TaskItem({
 		editTask(id, editedTask)
 		setIsEditing(false)
 	}
+
+	const author = users.find(u => u.id === createdBy)
+	const authorName = author ? `${author.surname} ${author.name}` : 'Неизвестно'
 
 	return (
 		<div className='bg-[#1f2121] shadow-md rounded-xl p-4 mb-4 border border-gray-700 hover:shadow-lg transition-shadow text-gray-100'>
@@ -111,6 +116,7 @@ export default function TaskItem({
 								: 'Без срока'}
 						</p>
 						<p>Категория: {category}</p>
+						<p>Автор: {authorName}</p>
 					</div>
 
 					<div className='flex items-center justify-between mt-2'>

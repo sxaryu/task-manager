@@ -8,7 +8,8 @@ import { useState } from 'react'
 export default function TaskPage() {
 	const [tasks, setTasks] = useLocalStorage('tasks', [])
 	const [searchTerm, setSearchTerm] = useState('')
-	const { logout, currentUser } = useAuth()
+	const [sortOption, setSortOption] = useState('createdAsc')
+	const { logout, currentUser, users } = useAuth()
 
 	const categories = [
 		'Администрирование',
@@ -24,7 +25,8 @@ export default function TaskPage() {
 				...newTask,
 				isFinished: false,
 				createdAt: new Date().toISOString(),
-				assignedTo: newTask.assignedTo || currentUser?.id
+				assignedTo: newTask.assignedTo || currentUser?.id,
+				createdBy: currentUser?.id
 			}
 		])
 	}
@@ -46,7 +48,28 @@ export default function TaskPage() {
 			? tasks
 			: tasks.filter(task => task.assignedTo === currentUser?.id)
 
-	const filteredTasks = displayTasks.filter(task =>
+	// Сортировка
+	const sortedTasks = [...displayTasks].sort((a, b) => {
+		const createdA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+		const createdB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+		const dueA = a.dueDate ? new Date(a.dueDate).getTime() : 8640000000000000
+		const dueB = b.dueDate ? new Date(b.dueDate).getTime() : 8640000000000000
+
+		switch (sortOption) {
+			case 'createdAsc':
+				return createdA - createdB
+			case 'createdDesc':
+				return createdB - createdA
+			case 'dueAsc':
+				return dueA - dueB
+			case 'dueDesc':
+				return dueB - dueA
+			default:
+				return 0
+		}
+	})
+
+	const filteredTasks = sortedTasks.filter(task =>
 		task.description.toLowerCase().includes(searchTerm.toLowerCase())
 	)
 
@@ -91,6 +114,20 @@ export default function TaskPage() {
 					</div>
 				)}
 
+				<div className='flex items-center gap-3 mb-4'>
+					<label>Сортировка:</label>
+					<select
+						value={sortOption}
+						onChange={e => setSortOption(e.target.value)}
+						className='px-3 py-2 rounded bg-[#2a2c2c] text-white border border-gray-700'
+					>
+						<option value='createdAsc'>Дата создания ↑</option>
+						<option value='createdDesc'>Дата создания ↓</option>
+						<option value='dueAsc'>Срок выполнения ↑</option>
+						<option value='dueDesc'>Срок выполнения ↓</option>
+					</select>
+				</div>
+
 				{filteredTasks.map(task => (
 					<TaskItem
 						key={task.id}
@@ -98,12 +135,14 @@ export default function TaskPage() {
 						description={task.description}
 						dueDate={task.dueDate}
 						createdAt={task.createdAt}
+						createdBy={task.createdBy}
 						category={task.category}
 						categories={categories}
 						deleteTask={deleteTask}
 						editTask={editTask}
 						isFinished={task.isFinished}
 						role={currentUser?.role}
+						users={users}
 					/>
 				))}
 			</main>

@@ -73,23 +73,29 @@ export default function PrintReport({
               <th>Срок</th>
               <th>Статус</th>
               <th>Создана</th>
+			  <th>Автор</th>
             </tr>
             ${filteredTasks
-							.map(
-								(t, i) => `
-              <tr>
-                <td>${i + 1}</td>
-                <td>${t.description || '-'}</td>
-                <td>${t.dueDate || '-'}</td>
-                <td class="${t.isFinished ? 'done' : 'pending'}">
-                  ${t.isFinished ? 'Выполнена' : 'Не выполнена'}
-                </td>
-                <td>${formatDate(t.createdAt) || '-'}</td>
-              </tr>
-            `
-							)
+							.map((t, i) => {
+								const author = users.find(u => u.id === t.createdBy)
+								const authorName = author
+									? `${author.surname} ${author.name}`
+									: '—'
+								return `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${t.description || '-'}</td>
+          <td>${t.dueDate || '-'}</td>
+          <td class="${t.isFinished ? 'done' : 'pending'}">
+            ${t.isFinished ? 'Выполнена' : 'Не выполнена'}
+          </td>
+          <td>${formatDate(t.createdAt) || '-'}</td>
+          <td>${authorName}</td>
+        </tr>
+      `
+							})
 							.join('')}
-          </table>
+</table>
 
           <p><strong>Всего задач:</strong> ${filteredTasks.length}</p>
           <script>window.print();</script>
