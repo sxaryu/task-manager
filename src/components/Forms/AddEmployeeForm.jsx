@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useAuth } from '../../hooks/AuthContext'
 
-export default function AddEmployeeForm() {
-	const { users, setUsers } = useAuth()
+export default function AddEmployeeForm({ addEmployee, users }) {
 	const [name, setName] = useState('')
 	const [surname, setSurname] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
-	const addEmployee = e => {
+	const handleSubmit = e => {
 		e.preventDefault()
 		if (
 			!name.trim() ||
@@ -29,11 +27,11 @@ export default function AddEmployeeForm() {
 			name: name.trim(),
 			surname: surname.trim(),
 			username: username.trim(),
-			password: password, // на фронтенде пока plain, на бэкенде нужно хешировать
+			password: password,
 			role: 'employee'
 		}
 
-		setUsers([...users, newUser])
+		addEmployee(newUser) // Используем переданную функцию
 		setName('')
 		setSurname('')
 		setUsername('')
@@ -43,7 +41,7 @@ export default function AddEmployeeForm() {
 
 	return (
 		<form
-			onSubmit={addEmployee}
+			onSubmit={handleSubmit}
 			className='flex flex-col gap-2 p-4 border border-gray-700 rounded bg-[#2a2c2c] mb-4'
 		>
 			<h3 className='text-lg font-semibold text-white'>Добавить сотрудника</h3>

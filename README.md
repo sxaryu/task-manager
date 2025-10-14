@@ -1,16 +1,34 @@
-# React + Vite
+# Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Выполнил ТЗ добавив все необходимые функции:
 
-Currently, two official plugins are available:
+- Авторизация и аутентификация пользователя и разграничение прав;
+- Регистрация новых пользователей;
+- Обеспечить возможность выполнения базовых CRUD операций над задачами;
+- Поиск по задачам;
+- Валидация вносимых данных;
+- Печать отчетов;
+- Сортировка задач по датам создания и окончания;
+- Указание того, кем создана задача.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Руководитель может:**
 
-## React Compiler
+- добавить нового сотрудника;
+- выдать задачу сотруднику;
+- изменить статус задачи;
+- редактировать задачу;
+- удалить задачу;
+- вывести на печать документ какие задачи были выполнены за период;
+- вывести на печать документ с отчетом о выполненных задачах сотрудника;
+- просмотреть дату выдачи и окончания задачи.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Сотрудник может:**
 
-## Expanding the ESLint configuration
+- просмотреть список своих задач;
+- изменить статус задачи;
+- просмотреть дату выдачи и окончания задачи;
+- вывести на печать документ с отчетом о проделанной работе.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+#github
+
+- https://github.com/sxaryu/task-manager
